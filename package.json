@@ -1,0 +1,26 @@
+{
+  "name": "uphold-bot",
+  "version": "1.0.0",
+  "description": "track currency exchange rates",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "uphold",
+    "currency",
+    "exchange"
+  ],
+  "author": "Ben Raymond",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "commander": "^7.2.0",
+    "csv-parser": "^3.0.0",
+    "got": "^11.8.2"
+  },
+  "devDependencies": {
+    "jest": "^27.0.1"
+  }
+}

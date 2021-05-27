@@ -4,17 +4,27 @@ const csv = require('csv-parser')
 const fs = require('fs')
 
 const results = [];
-const { Command } = require('commander');
+const { program } = require('commander');
 
+program.description("An application to alert the user to exchange rate changes")
+// program.option('-i, --input-file', "Input csv file with format: first currency, second currency, percent threshold, and check rate (sec). Optionally multi line")
+program.option('-c1, --first <type>', "first currency", "BTC")
+program.option('-c2, --second <type>', "second currency", "USD")
+program.option('-p, --percent <type>', "threshold of percent difference", 0.01)
+program.option('-t, --interval <type>', "interval (in seconds) between each ticker retreival", 5)
 
-// const program = new Command();
-// program.version('0.0.1');
+program.parse();
 
-// program.option('-f, --file', "Input csv file with format: first currency, second currency, percent threshold, and check rate (sec). Optionally multi line")
+const options = program.opts();
 
-// program.parse(process.argv)
+console.log(options.first)
+console.log(options.second)
+console.log(options.percent)
+console.log(options.interval)
 
+priceChecker.requestRateInterval(""+options.first, ""+options.second, 1*options.percent, options.interval * 1000);
 
+// priceChecker.requestRateInterval("BTC", "USD", 0.01, 5000);
 
 // fs.createReadStream('./multi_input.csv')
 //   .pipe(csv({headers: false}))
@@ -39,5 +49,3 @@ const { Command } = require('commander');
 //     //   { NAME: 'Bugs Bunny', AGE: '22' }
 //     // ]
 //   });
-
-priceChecker.requestRateInterval("BTC", "USD", 0.01, 5000);

@@ -57,22 +57,33 @@ const axios = require('axios');
         this.requestTimerHandle = setInterval(requestRate, interval, first, second, threshold)
     }
 
+    async function getPrice(url) {
+        const response = await got(url);
+        const data = await response.body;
+        return data;
+    }
+
     async function requestRate(first, second, threshold) {
         console.log("requesting conversion rate between " + first + " and " + second)
         
-        try {
-            const response = await got('https://api.uphold.com/v0/ticker/' + first + '-' + second);
-            console.log(response.body);
-            let currentTick = JSON.parse(response.body);
-            alertDifference(currentTick, threshold);
+        let currentTickData = await getPrice('https://api.uphold.com/v0/ticker/' + first + '-' + second)
+        let currentTick = JSON.parse(currentTickData);
+        alertDifference(currentTick, threshold);
 
-        } catch (error) {
-            console.log(error.response.body);
-        }
+        // try {
+        //     const response = await got('https://api.uphold.com/v0/ticker/' + first + '-' + second);
+        //     console.log(response.body);
+        //     let currentTick = JSON.parse(response.body);
+        //     alertDifference(currentTick, threshold);
+
+        // } catch (error) {
+        //     console.log(error.response.body);
+        // }
     }
 
 
 // var checker = new PriceCheck("BTC", "USD", 0.01, 5000);
 // requestRateInterval("BTC", "USD", 0.01, 5000);
 
-module.exports = {requestRateInterval: requestRateInterval}
+module.exports = {requestRateInterval: requestRateInterval,
+                    absolutePercentDiff: absolutePercentDiff}

@@ -1,11 +1,12 @@
 
 const csv = require('csv-parser')
 const fs = require('fs')
-
-const results = [];
 const { program } = require('commander');
 const { PriceCheck } = require("./priceChecker.js");
 const priceChecker = require('./priceChecker.js');
+
+
+// create arguments
 
 program.description("An application to alert the user to exchange rate changes")
 program.option('-i, --input-file <type>', "Input csv file with format: first currency, second currency, percent threshold, and check rate (sec). Optionally multi line")
@@ -24,6 +25,7 @@ console.log(options.second)
 console.log(options.percent)
 console.log(options.interval)
 
+//parse arguments
 
 if (typeof options.inputFile != 'undefined' && ""+options.inputFile != "") {
 
@@ -44,6 +46,8 @@ if (typeof options.inputFile != 'undefined' && ""+options.inputFile != "") {
  * @param {} csvFile 
  */
 function parseCsv(csvFile) {
+
+    const results = [];
 
     fs.createReadStream(csvFile)
     .pipe(csv({headers: false}))

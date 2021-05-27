@@ -1,5 +1,10 @@
 const got = require("got")
 
+/**
+ * 
+ * Uses Uphold API to detect price swings
+ * 
+ */
 class PriceCheck {
 
     constructor() {
@@ -38,6 +43,8 @@ class PriceCheck {
      */
      alertDifference(currentTick, threshold) {
 
+        let isDifference = false;
+
         if (this.lastTick != undefined) {
 
             let lastPrice = Number(this.lastTick.ask);
@@ -45,12 +52,16 @@ class PriceCheck {
 
             let diff = this.absolutePercentDiff(lastPrice, currentPrice);
 
-        if (diff >= threshold) {
-            console.log("ALERT: price changed " + diff + " percent")
-        } 
+            if (diff >= threshold) {
+                console.log("ALERT: price changed " + diff + " percent")
+                isDifference = true;
+            } 
         }
 
         this.lastTick = currentTick;
+
+        //return boolean for testability (for now)
+        return isDifference;
     }
     
     /**

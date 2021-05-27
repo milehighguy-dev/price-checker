@@ -15,7 +15,6 @@
   "author": "Ben Raymond",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
     "commander": "^7.2.0",
     "csv-parser": "^3.0.0",
     "got": "^11.8.2"

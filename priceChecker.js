@@ -78,6 +78,7 @@ class PriceCheck {
         
         let currentTickData = await this.getPrice('https://api.uphold.com/v0/ticker/' + first + '-' + second)
         let currentTick = JSON.parse(currentTickData);
+
         this.alertDifference(currentTick, threshold);
 
     }

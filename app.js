@@ -25,7 +25,7 @@ console.log(options.percent)
 console.log(options.interval)
 
 
-if (""+options.inputFile != "") {
+if (typeof options.inputFile != 'undefined' && ""+options.inputFile != "") {
 
     console.log("Parsing csv for multiple price checks. Ignoring other arguments")
     parseCsv(""+options.inputFile)
@@ -45,11 +45,10 @@ if (""+options.inputFile != "") {
  */
 function parseCsv(csvFile) {
 
-    fs.createReadStream('./multi_input.csv')
+    fs.createReadStream(csvFile)
     .pipe(csv({headers: false}))
     .on('data', (data) => results.push(data))
     .on('end', () => {
-      console.log(results);
   
       for (let i of results) {
   

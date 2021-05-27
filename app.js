@@ -1,10 +1,11 @@
 
-const priceChecker = require("./priceChecker.js")
+// const priceChecker = require("./priceChecker.js")
 const csv = require('csv-parser')
 const fs = require('fs')
 
 const results = [];
 const { program } = require('commander');
+const { PriceCheck } = require("./priceChecker.js");
 
 program.description("An application to alert the user to exchange rate changes")
 // program.option('-i, --input-file', "Input csv file with format: first currency, second currency, percent threshold, and check rate (sec). Optionally multi line")
@@ -22,6 +23,7 @@ console.log(options.second)
 console.log(options.percent)
 console.log(options.interval)
 
+priceChecker = new PriceCheck();
 priceChecker.requestRateInterval(""+options.first, ""+options.second, 1*options.percent, options.interval * 1000);
 
 // priceChecker.requestRateInterval("BTC", "USD", 0.01, 5000);

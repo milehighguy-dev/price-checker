@@ -3,9 +3,13 @@ const got = require("got")
 class PriceCheck {
 
     constructor() {
+
+        //the previous price tick to compare with
         this.lastTick;
+
         this.requestTimerHandle;
 
+        //bind so we can use "this" context
         this.absolutePercentDiff = this.absolutePercentDiff.bind(this);
         this.alertDifference = this.alertDifference.bind(this);
         this.requestRateInterval = this.requestRateInterval.bind(this);

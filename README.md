@@ -69,7 +69,7 @@ if you want to provide a .csv file you will have to mount the directory where it
 
 example command (ran on linux where \`pwd\` resolved to the current directory, where the test.csv file lived)
 
-`docker run -v \`pwd\`:/app --name pricecheck_container pricecheck_image -i test.csv`
+``docker run -v `pwd`:/app --name pricecheck_container pricecheck_image -i test.csv``
 
 to stop the container run:
 

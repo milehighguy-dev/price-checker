@@ -14,9 +14,11 @@ class PriceCheck {
 
         this.requestTimerHandle;
 
+        this.url = 'https://api.uphold.com/v0/ticker/';
+
         //bind so we can use "this" context
         this.absolutePercentDiff = this.absolutePercentDiff.bind(this);
-        this.alertDifference = this.alertDifference.bind(this);
+        this.updateDifference = this.updateDifference.bind(this);
         this.requestRateInterval = this.requestRateInterval.bind(this);
         this.requestRate = this.requestRate.bind(this);
         this.getPrice = this.getPrice.bind(this);
@@ -36,32 +38,28 @@ class PriceCheck {
     }
 
     /**
-     * send message to standard out if price difference too high
+     * update the last tick and calculate the percent change
      * 
      * @param {*} currentTick 
      * @param {*} threshold - a percent  
      */
-     alertDifference(currentTick, threshold) {
+     updateDifference(currentTick) {
 
-        let isDifference = false;
+        let diff = 0;
 
         if (this.lastTick != undefined) {
 
             let lastPrice = Number(this.lastTick.ask);
             let currentPrice = Number(currentTick.ask);
 
-            let diff = this.absolutePercentDiff(lastPrice, currentPrice);
+            diff = this.absolutePercentDiff(lastPrice, currentPrice);
 
-            if (diff >= threshold) {
-                console.log("ALERT: price changed " + diff + " percent")
-                isDifference = true;
-            } 
         }
 
         this.lastTick = currentTick;
 
         //return boolean for testability (for now)
-        return isDifference;
+        return diff;
     }
     
     /**
@@ -85,12 +83,15 @@ class PriceCheck {
     }
 
     async requestRate(first, second, threshold) {
-        console.log("requesting conversion rate between " + first + " and " + second)
         
-        let currentTickData = await this.getPrice('https://api.uphold.com/v0/ticker/' + first + '-' + second)
+        let currentTickData = await this.getPrice(this.url + first + '-' + second)
         let currentTick = JSON.parse(currentTickData);
+        console.log(first + " is " + currentTick.ask + " " + second);
 
-        this.alertDifference(currentTick, threshold);
+        let diff = this.updateDifference(currentTick);
+        if (diff >= threshold) {
+            console.log(first + " changed " + diff + " percent");
+        }
 
     }
 }

@@ -6,20 +6,18 @@ test('reports that the percent difference between 5 and 7 is 33.333- percent', (
 });
 
 
-test("reports that there is a price difference higher than the threshold", () => {
+test("reports that there is a price difference of 0.05642", () => {
 
     priceChecker = new PriceCheck();
     priceChecker.lastTick = { ask: '37730.01689', bid: '37612.37741', currency: 'USD' };
     let currentTick = { ask: '37751.31227', bid: '37553.17977', currency: 'USD' };
-    let threshold = 0.01
-    expect(priceChecker.alertDifference(currentTick, threshold)).toBe(true)
+    expect(priceChecker.updateDifference(currentTick)).toBe(0.05642555645744595)
 })
 
-test("reports that there is NOT a price difference higher than the threshold", () => {
+test("reports that there is a price difference of 0", () => {
 
     priceChecker = new PriceCheck();
     priceChecker.lastTick = { ask: '37751.31227', bid: '37553.17977', currency: 'USD' };
     let currentTick = { ask: '37751.31227', bid: '37553.17977', currency: 'USD' };
-    let threshold = 0.01
-    expect(priceChecker.alertDifference(currentTick, threshold)).toBe(false)
+    expect(priceChecker.updateDifference(currentTick)).toBe(0)
 })

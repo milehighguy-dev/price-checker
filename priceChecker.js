@@ -58,7 +58,6 @@ class PriceCheck {
 
         this.lastTick = currentTick;
 
-        //return boolean for testability (for now)
         return diff;
     }
     

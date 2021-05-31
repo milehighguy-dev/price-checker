@@ -21,3 +21,12 @@ test("reports that there is a price difference of 0", () => {
     let currentTick = { ask: '37751.31227', bid: '37553.17977', currency: 'USD' };
     expect(priceChecker.updateDifference(currentTick)).toBe(0)
 })
+
+test("reports that the lastTick was updated", () => {
+
+    priceChecker = new PriceCheck();
+    priceChecker.lastTick = { ask: '37730.01689', bid: '37612.37741', currency: 'USD' };
+    let currentTick = { ask: '37751.31227', bid: '37553.17977', currency: 'USD' };
+    priceChecker.updateDifference(currentTick)
+    expect(priceChecker.lastTick.ask).toBe('37751.31227')
+})

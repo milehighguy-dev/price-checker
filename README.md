@@ -79,5 +79,3 @@ and to remove it:
 
 `docker container rm <container_name>`
 
-please email me back with any questions at milehighben@hotmail.com
-
